@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Aumentada, Expandida y Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        
+        .collage-section {
+            padding: 40px;
+            background: linear-gradient(to bottom, #f0f4f8, #d9e8f5);
+        }
+        
+        .collage-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .photo-card {
+            position: relative;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transform: rotate(0deg);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+        
+        .photo-card:nth-child(odd) {
+            transform: rotate(-2deg);
+        }
+        
+        .photo-card:nth-child(even) {
+            transform: rotate(2deg);
+        }
+        
+        .photo-card:hover {
+            transform: rotate(0deg) scale(1.08);
+            z-index: 100;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .photo-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .quote-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 70%, transparent 100%);
+            color: white;
+            padding: 25px 20px;
+            transform: translateY(calc(100% - 60px));
+            transition: transform 0.4s ease;
+        }
+        
+        .photo-card:hover .quote-overlay {
+            transform: translateY(0);
+        }
+        
+        .quote-text {
+            font-size: 0.95em;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            font-style: italic;
+            color: #fff;
+        }
+        
+        .quote-author {
+            font-size: 0.85em;
+            font-weight: bold;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .additional-quotes {
+            padding: 50px 40px;
+            background: #ffffff;
+        }
+        
+        .section-title {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 3px;
+        }
+        
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 25px;
+        }
+        
+        .quote-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-left: 6px solid #667eea;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .quote-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #fff 0%, #e8eef5 100%);
+        }
+        
+        .quote-card .text {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+        
+        .quote-card .author {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 0.95em;
+        }
+        
+        @media (max-width: 1200px) {
+            .collage-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .quotes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .collage-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .header h1 {
+                font-size: 2em;
+            }
+            .photo-card img {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 El Aula Aumentada, Expandida y Digital</h1>
+            <p>20 Características desde múltiples perspectivas pedagógicas</p>
+        </div>
+        
+        <div class="collage-section">
+            <div class="collage-grid">
+                <div class="photo-card">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=500" alt="Estudiante con robótica">
+                    <div class="quote-overlay">
+                        <div class="quote-text">"¿Y si los 500 años de historia del texto impreso no hubieran sido más que un paréntesis en el mundo oral de casi toda la historia?"</div>
+                        <div class="quote-author">— Piscitelli</div>
+                    </div>
+                </div>
+                
+                <div class="photo-card">
+                    <img src="https://images.unsplash.com/photo-1588702547919-26089e690ecc?w=500" alt="Estudiante escribiendo con tablet">
+                    <div class="quote-overlay">
+                        <div class="quote-text">"Esta modalidad formativa se define por el uso entrelazado de la presencia con la no presencia en las aulas."</div>
+                        <div class="quote-author">— Duart</div>
+                    </div>
+                </div>
+                
+                <div class="photo-card">
+                    <img src="https://images.unsplash.com/photo-1581726707445-75cbe4efc586?w=500" alt="Niños colaborando">
+                    <div class="quote-overlay">
+                        <div class="quote-text">"Tenemos que pensar en el objeto libro de otra manera: expandido, abierto, conectado."</div>
+                        <div class="quote-author">— Martínez Ciuró</div>
+                    </div>
+                </div>
+                
+                <div class="photo-card">
+                    <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?w=500" alt="Niños con tablet">
+                    <div class="quote-overlay">
+                        <div class="quote-text">"Las formas de leer y escribir han cambiado de una manera radical aunque utilicemos las mismas palabras."</div>
+                        <div class="quote-author">— Cassany</div>
+                    </div>
+                </div>
+                
+                <div class="photo-card">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500" alt="Videoconferencia">
+                    <div class="quote-overlay">
+                        <div class="quote-text">"el aula extendida se constituye en un espacio donde enriquecer y ampliar los contenidos y experiencias."</div>
+                        <div class="quote-author">— Pascolini y Fernández (2015)</div>
+                    </div>
+                </div>
+                
+                <div class="photo-card">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=500" alt="Estudiante con tablet y cuaderno">
+                    <div class="quote-overlay">
+                        <div class="quote-text">"no se prevé que todos los estudiantes puedan acudir a las aulas físicas en el mismo espacio y tiempo"</div>
+                        <div class="quote-author">— García Aretio (2021)</div>
+                    </div>
+                </div>
+                
+                <div class="photo-card">
+                    <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=500" alt="Madre e hija aprendiendo">
+                    <div class="quote-overlay">
+                        <div class="quote-text">"el docente en tanto autor-curador ofrece una amplitud de modos semánticos que posibilita a cada uno acercarse a los contenidos."</div>
+                        <div class="quote-author">— Rogovsky y Chamorro</div>
+                    </div>
+                </div>
+                
+                <div class="photo-card">
+                    <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=500" alt="Escritura digital">
+                    <div class="quote-overlay">
+                        <div class="quote-text">"De aprender contenidos a aprender a ser"</div>
+                        <div class="quote-author">— Reig (2010)</div>
+                    </div>
+                </div>
+                
+                <div class="photo-card">
+                    <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=500" alt="Aula tecnológica">
+                    <div class="quote-overlay">
+                        <div class="quote-text">"la única función del docente es que el alumno aprenda por sí mismo usando su propia tecnología"</div>
+                        <div class="quote-author">— Rancière</div>
+                    </div>
+                </div>
+                
+                <div class="photo-card">
+                    <img src="https://images.unsplash.com/photo-1516534775068-ba3e7458af70?w=500" alt="Trabajo colaborativo">
+                    <div class="quote-overlay">
+                        <div class="quote-text">"una narrativa transmedia es un relato que se cuenta a través de múltiples medios y plataformas."</div>
+                        <div class="quote-author">— Scolari</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="additional-quotes">
+            <h2 class="section-title">💡 Características Adicionales del Aula Expandida</h2>
+            
+            <div class="quotes-grid">
+                <div class="quote-card">
+                    <div class="text">"hacelo vos mismo, con lo que tenés a mano, y, fundamentalmente, con otros."</div>
+                    <div class="author">Yasmin Blanco - Espíritu Edupunk</div>
+                </div>
+                
+                <div class="quote-card">
+                    <div class="text">"selección de evidencias/muestras que tiene que recoger y aportar el estudiante a lo largo de un periodo de tiempo determinado (...) permiten al alumnado demostrar que está aprendiendo"</div>
+                    <div class="author">Barberà - Sobre portfolios</div>
+                </div>
+                
+                <div class="quote-card">
+                    <div class="text">"El concepto fundamental, verdadero y real de la modernidad no es la revolución sino la explicitación."</div>
+                    <div class="author">Sloterdijk (2006)</div>
+                </div>
+                
+                <div class="quote-card">
+                    <div class="text">"Leí un libro que era como un diccionario de la mitología griega, otro que se llamaba Alejandro, y otro sobre La Odisea. Por el juego. Después del juego. Si no, no los hubiera leído."</div>
+                    <div class="author">Mateo - Estudiante</div>
+                </div>
+                
+                <div class="quote-card">
+                    <div class="text">"La cátedra tiene una propuesta desde lo emotivo y apela a nuestra capacidad para comprometernos."</div>
+                    <div class="author">Yasmin Blanco</div>
+                </div>
+                
+                <div class="quote-card">
+                    <div class="text">Dime cómo evalúas y te diré cómo aprenden (a aprender) tus alumnos</div>
+                    <div class="author">Monereo & Lemus (2010)</div>
+                </div>
+                
+                <div class="quote-card">
+                    <div class="text">La multimodalidad permite que cada estudiante encuentre su propio camino hacia el conocimiento, ya sea a través de videos, textos, audio, imágenes o experiencias interactivas.</div>
+                    <div class="author">Reflexión sobre práctica pedagógica</div>
+                </div>
+                
+                <div class="quote-card">
+                    <div class="text">La horizontalidad comunicativa en espacios digitales transforma la dinámica tradicional del aula, permitiendo que las voces de todos los estudiantes encuentren su lugar.</div>
+                    <div class="author">Observación docente</div>
+                </div>
+                
+                <div class="quote-card">
+                    <div class="text">Los portfolios digitales documentan no solo productos finales sino procesos de pensamiento, errores productivos y trayectorias de aprendizaje únicas.</div>
+                    <div class="author">Experiencia en evaluación formativa</div>
+                </div>
+                
+                <div class="quote-card">
+                    <div class="text">El aula aumentada es un territorio en permanente redefinición, donde cada nueva herramienta y cada nueva generación de estudiantes nos invita a repensar nuestras certezas pedagógicas.</div>
+                    <div class="author">Reflexión sobre innovación educativa</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
